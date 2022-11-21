@@ -6,6 +6,20 @@ import shutil
 import glob
 import math
 
+def make_folder():
+
+    patha = "./image"
+    if not os.path.isdir(patha):
+            os.mkdir(patha)
+
+    pathb = "./train"
+    if not os.path.isdir(pathb):
+        os.mkdir(pathb)
+
+    pathc = "./valid"
+    if not os.path.isdir(pathc):
+        os.mkdir(pathc)
+
 def read_cam():
     
     cap = cv2.VideoCapture(cv2.CAP_DSHOW+0)
@@ -36,10 +50,11 @@ def read_cam():
     for f in files:
     	os.rename(f, os.path.join(path, n + c + os.path.basename(f)))
     cap.release()
+
     
     #random_image
     source = "./image"
-    dest = "./train\\images"
+    dest = "./train"
 
     b = a * 0.7
     no_of_files=int(b)
@@ -54,7 +69,7 @@ def read_cam():
     print(bf, "장 Training 폴더 이동 완료")
     
     source = "./image"
-    dest = "./valid\\images"
+    dest = "./valid"
 
     c = a * 0.3
     no_of_files=int(c)
@@ -72,10 +87,12 @@ def read_cam():
     
 def main():
     print("페트병 구분 \n BNP = big_nolabel_pets \n SNP = small_nolabel_pets \n BLP = big_label_pets \n SLP = small_label_pets \n NRP = no_recycle_pets")
+    make_folder()
+    print("분류 폴더 생성")
     read_cam()
     #random_image()
 
-    while True:
+    while(1):
         print("촬영을 계속 하겠습니까? (Y or N): ", end='')
         answer = input()
         if answer == "y" or answer == "Y" or answer == 'o' or answer == 'O':
