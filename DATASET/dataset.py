@@ -16,13 +16,36 @@ def make_folder():
     if not os.path.isdir(pathb):
         os.mkdir(pathb)
 
+    pathb_r = "./train/images"
+    if not os.path.isdir(pathb_r):
+        os.mkdir(pathb_r)
+
     pathc = "./valid"
     if not os.path.isdir(pathc):
         os.mkdir(pathc)
 
+    pathc_r = "./valid/images"
+    if not os.path.isdir(pathc_r):
+        os.mkdir(pathc_r)
+
+        
+def delete_image_folder():
+    filePath = "./image"
+    fileExtension = '.jpg'
+    print("1")
+    if os.path.exists(filePath):
+        for file in os.scandir(filePath):
+            if file.name.endswith(fileExtension):
+                os.remove(file.path)
+        return 'Remove File: ' + fileExtension 
+    else:
+        return 'Directory Not Found'
+    print(removeExtensionFile('./image', '.jpg'))
+    print("이미지 폴더 파일 삭제")
+
 def read_cam():
     
-    cap = cv2.VideoCapture(cv2.CAP_DSHOW+0)
+    cap = cv2.VideoCapture(cv2.CAP_DSHOW)
     
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
@@ -38,6 +61,8 @@ def read_cam():
     print("=============================================================")
 
     a = int(input("촬영할 이미지 갯수는? : "))
+    #time.sleep(5)
+    print("촬영 시작")
     for x in range(1, a+1):
     	ret, frame = cap.read()
     	cv2.imwrite(f'./image\\image{x}.jpg', frame)
@@ -54,7 +79,7 @@ def read_cam():
     
     #random_image
     source = "./image"
-    dest = "./train"
+    dest = "./train\\images"
 
     b = a * 0.7
     no_of_files=int(b)
@@ -69,7 +94,7 @@ def read_cam():
     print(bf, "장 Training 폴더 이동 완료")
     
     source = "./image"
-    dest = "./valid"
+    dest = "./valid\\images"
 
     c = a * 0.3
     no_of_files=int(c)
@@ -90,13 +115,16 @@ def main():
     make_folder()
     print("분류 폴더 생성")
     read_cam()
+    delete_image_folder()
     #random_image()
 
     while(1):
         print("촬영을 계속 하겠습니까? (Y or N): ", end='')
         answer = input()
         if answer == "y" or answer == "Y" or answer == 'o' or answer == 'O':
+            time.sleep(5)
             read_cam()
+            delete_image_folder()
             #random_image()
 
         elif answer == "n" or answer == "N" or answer == 'x' or answer == 'X':
