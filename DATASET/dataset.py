@@ -63,7 +63,7 @@ def read_cam():
     a = int(input("촬영할 이미지 갯수는? : "))
     #time.sleep(5)
     print("촬영 시작")
-    for x in range(1, a+1):
+    for x in range(0, a):
     	ret, frame = cap.read()
     	cv2.imwrite(f'./image\\image{x}.jpg', frame)
     	#time.sleep(0.5)
