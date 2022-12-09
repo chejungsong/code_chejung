@@ -32,7 +32,7 @@ def make_folder():
 def delete_image_folder():
     filePath = "./image"
     fileExtension = '.jpg'
-    print("1")
+    print("이미지 파일 삭제")
     if os.path.exists(filePath):
         for file in os.scandir(filePath):
             if file.name.endswith(fileExtension):
@@ -53,7 +53,7 @@ def read_cam():
     cap.set(cv2.CAP_PROP_AUTOFOCUS, 0)
     cap.set(28, 1)
     cap.set(cv2.CAP_PROP_EXPOSURE, -4.5)
-    
+                    
 
     print("=============================================================")
     c = input("페트병 구분 입력[(입력시): BNP, SNP, BLP, SLP, NRP]: ")
@@ -63,7 +63,7 @@ def read_cam():
     a = int(input("촬영할 이미지 갯수는? : "))
     #time.sleep(5)
     print("촬영 시작")
-    for x in range(0, a):
+    for x in range(0, a+1):
     	ret, frame = cap.read()
     	cv2.imwrite(f'./image\\image{x}.jpg', frame)
     	#time.sleep(0.5)
@@ -115,6 +115,7 @@ def main():
     make_folder()
     print("분류 폴더 생성")
     read_cam()
+    time.sleep(2)
     delete_image_folder()
     #random_image()
 
@@ -124,6 +125,7 @@ def main():
         if answer == "y" or answer == "Y" or answer == 'o' or answer == 'O':
             time.sleep(5)
             read_cam()
+            time.sleep(2)
             delete_image_folder()
             #random_image()
 
