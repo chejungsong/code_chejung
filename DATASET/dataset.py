@@ -63,6 +63,7 @@ def read_cam():
     a = int(input("촬영할 이미지 갯수는? : "))
     #time.sleep(5)
     print("촬영 시작")
+    #첫번째 파일이 문제가 생기니 첫번째 파일을 자동으로 삭제가 가능한가?
     for x in range(0, a+1):
     	ret, frame = cap.read()
     	cv2.imwrite(f'./image\\image{x}.jpg', frame)
@@ -75,6 +76,20 @@ def read_cam():
     for f in files:
     	os.rename(f, os.path.join(path, n + c + os.path.basename(f)))
     cap.release()
+    time.sleep(2)
+
+    #여기서 파일 명 찾아서 삭제
+    pick_files = ["image0"]
+    org_directory_ = r"./image"
+
+    org_directory = org_directory_.replace("\\", "/", 20)
+    for i in range(0, len(pick_files)):
+        FileList = os.listdir(org_directory)
+        delete_num = [n for n in range(len(FileList)) if pick_files[i] in FileList[n]]
+        for j in delete_num:
+            os.remove("{}/{}".format(org_directory, FileList[j]))
+    print("파일 삭제")
+    time.sleep(2)
 
     
     #random_image
